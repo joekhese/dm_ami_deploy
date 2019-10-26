@@ -5,13 +5,14 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 
-// Display lines 
-def separator60 = '\u2739' * 60 
-def separator20 = '\u2739' * 20 
+// Beautify display
+def seperator60 = '\u2739' * 60
+def seperator20 = '\u2739' * 20
+
 
 node('misc') {
     stage('Repo Pull') {
-        echo "${seperator60}\n${seperator20} Checkout Source Repo \n${seperator60}"
+        eecho "${seperator60}\n${seperator20} Checkout Source Repo \n${seperator60}"
         deleteDir()
         checkout scm 
     }
