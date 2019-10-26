@@ -46,15 +46,4 @@
         "environ": "dev"
       }
     }]
-    // "provisioners": [{
-    //     "type": "shell",
-    //     "inline": [
-    //       "echo helloword"
-    //     ]
-    //   },{
-    //     "type": "shell",
-    //     "inline": [
-    //       "sudo yum install wget -y"
-    //     ]
-    //   }]    
 }
