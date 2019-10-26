@@ -29,7 +29,7 @@ node('misc') {
             dir('./'){
                 sh"""
                     packer validate packer.json
-                    packer fmt 
+                    
                 """
             }
 
@@ -37,21 +37,21 @@ node('misc') {
 
     }
 
-    stage("BUILD AMI") {
-        echo "${seperator60}\n${seperator20} Building Image \n${seperator60}"
-        withCredentials([
-            usernamePassword(credentialsId: 'dm_aws_cli',
-            passwordVariable: 'AWS_SECRET_ACCESS_KEY',
-            usernameVariable: 'AWS_ACCESS_KEY_ID'
-        )])
-        {
-            dir('./'){
-                sh """
-                    packer build packer.json 
-                """
-            }
-        }        
-    }
+    // stage("BUILD AMI") {
+    //     echo "${seperator60}\n${seperator20} Building Image \n${seperator60}"
+    //     withCredentials([
+    //         usernamePassword(credentialsId: 'dm_aws_cli',
+    //         passwordVariable: 'AWS_SECRET_ACCESS_KEY',
+    //         usernameVariable: 'AWS_ACCESS_KEY_ID'
+    //     )])
+    //     {
+    //         dir('./'){
+    //             sh """
+    //                 packer build packer.json 
+    //             """
+    //         }
+    //     }        
+    // }
 
     stage("Deploy VPC|App|Web Cluster") {
         echo "${seperator60}\n${seperator20} Pause on VPC|App|Web Deployments \n${seperator60}"
