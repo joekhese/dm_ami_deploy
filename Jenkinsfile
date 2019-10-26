@@ -29,6 +29,7 @@ node('misc') {
             dir('./'){
                 sh"""
                     packer validate packer.json
+                    packer fmt 
                 """
             }
 
@@ -52,6 +53,27 @@ node('misc') {
         }        
     }
 
+    stage("Deploy VPC|App|Web Cluster") {
+        echo "${seperator60}\n${seperator20} Pause on VPC|App|Web Deployments \n${seperator60}"
+        try {
+            timeout(time: 30, unit: 'MINUTES') {
+                input message: 'Ready to deploy VPC|App|Web Cluster?'
+            }
+        }
+        catch (err) {
+            echo "Aborted by user!"
+            currentBuild.result = 'ABORTED'
+            error('Job Aborted')
+        }
+    }
+
+    stage('Trigger Next Job') {
+        echo "${seperator60}\n${seperator20} Trigeering VPC|WEB|APP Cluster Job \n${seperator60}"
+        build(
+            job: '2_vpc_web_app_cluster_job',
+            wait: 'true'
+        )
+    } 
 }
 
 // Custom Functions docker ps 

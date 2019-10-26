@@ -5,7 +5,7 @@
       "aws_secret_key": "{{ env `AWS_SECRET_ACCESS_KEY`}}",
       "dest_ami_name": "dm_golden_image",
       "aws_region": "eu-west-1",
-      "version": "v0.0.6",
+      "version": "v0.0.7",
       "source_ami_id": "ami-09231b65804de93d6"
     },
   
