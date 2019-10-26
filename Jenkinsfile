@@ -11,6 +11,7 @@ def seperator20 = '\u2739' * 20
 
 
 node('misc') {
+    
     stage('Repo Pull') {
         echo "${seperator60}\n${seperator20} Checkout Source Repo \n${seperator60}"
         deleteDir()
@@ -33,6 +34,22 @@ node('misc') {
 
         }
 
+    }
+
+    stage("BUILD AMI") {
+        echo "${seperator60}\n${seperator20} Building Image \n${seperator60}"
+        withCredentials([
+            usernamePassword(credentialsId: 'dm_aws_cli',
+            passwordVariable: 'AWS_SECRET_ACCESS_KEY',
+            usernameVariable: 'AWS_ACCESS_KEY_ID'
+        )])
+        {
+            dir('./'){
+                sh """
+                    packer build packer.json 
+                """
+            }
+        }        
     }
 
 }
