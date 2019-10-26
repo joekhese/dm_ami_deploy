@@ -20,7 +20,7 @@ node('misc') {
     stage('Syntax Check') {
         echo "${seperator60}\n${seperator20} Checking packer Syntax \n${seperator60}"
         withCredentials([
-            usernamePassword(credentialsId: 'dm_aws_cli'
+            usernamePassword(credentialsId: 'dm_aws_cli',
             passwordVariable: 'AWS_SECRET_ACCESS_KEY',
             usernameVariable: 'AWS_ACCESS_KEY_ID'
         )])
