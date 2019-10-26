@@ -12,7 +12,7 @@ def seperator20 = '\u2739' * 20
 
 node('misc') {
     stage('Repo Pull') {
-        eecho "${seperator60}\n${seperator20} Checkout Source Repo \n${seperator60}"
+        echo "${seperator60}\n${seperator20} Checkout Source Repo \n${seperator60}"
         deleteDir()
         checkout scm 
     }
