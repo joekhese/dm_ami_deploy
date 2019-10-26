@@ -1,0 +1,11 @@
+
+--- 
+- host: all 
+  remote_user: centos 
+  become: yes 
+
+  tasks: 
+  - name: 
+    yum: 
+      name: mtr
+      state: installed 

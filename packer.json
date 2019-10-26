@@ -1,0 +1,61 @@
+{
+    "_comment" : "Base AMI: DevMinds Immutable infra ",
+    "variables": {
+      "aws_access_key": "{{ env `AWS_ACCESS_KEY_ID`}}",
+      "aws_secret_key": "{{ env `AWS_SECRET_ACCESS_KEY`}}",
+      "dest_ami_name": "dm_golden_image",
+      "aws_region": "eu-west-1",
+      "version": "v0.0.5",
+      "source_ami_id": "ami-09231b65804de93d6"
+    },
+  
+    "builders": [{
+      "ami_name": "{{user `dest_ami_name`}}{{ user `version`}}",
+      "ami_description": "CentOS7-Infra-AMI",
+      "instance_type": "t2.micro",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "{{user `aws_region`}}",
+      "type": "amazon-ebs",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "architecture": "x86_64",
+          "name": "*",
+          "root-device-type": "ebs"
+        },
+        "owners": ["023451010066"],
+        "most_recent": true
+      },
+      "launch_block_device_mappings": 
+        [{
+        "device_name": "/dev/sda1",
+        "volume_size": 50,
+        "volume_type": "gp2",
+        "delete_on_termination": true
+        }
+      ],
+      "ssh_keypair_name": "dm-kliuch",
+      "ssh_username": "centos",
+      "ssh_keypair_name": "{{user `ssh_keypair_name`}}",
+      "ssh_private_key_file":"./dm-kliuch.pem",
+      "run_tags": {"Name": "deployer"},
+      "tags": {
+        "Release": "Latest",
+        "Os": "centos",
+        "environ": "dev"
+      }
+    }],
+    "provisioners": [{
+        "type": "shell",
+        "inline": [
+          "echo 'Sleeping for 30 seconds to give Ubuntu enough time to initialize (otherwise, packages may fail to install).'",
+          "sleep 30"
+        ]
+      },{
+        "type": "shell",
+        "inline": [
+          "sudo yum install wget -y"
+        ]
+      }]    
+}
